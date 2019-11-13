@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+# -*- coding:utf8 -*-
+
+from msh import msh
+import sys
+import signal
+
+
+def intur_hander(signal, frame):
+    sys.exit(0)
+
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, intur_hander)
+    msh.main()
+
+
