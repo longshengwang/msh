@@ -31,7 +31,6 @@ class PexpectClient:
         if self.port != 22:
             ssh_str = 'ssh -p %s %s@%s' % (str(self.port), self.username, self.host)
 
-        print 'ssh_str' , ssh_str
         self.child = pexpect.spawn(ssh_str)
         # self.child = pexpect.spawn('ssh %s@%s'%(self.username, self.host))
 
