@@ -7,7 +7,7 @@ from msh.constants.Constants import SSHSchedule
 from msh.constants.PasswordErrorException import PasswordErrorException
 import signal
 import getpass
-from msh.service.color import greenStr
+from msh.service.color import greenStr, UseStyle
 
 
 import struct, fcntl, termios
@@ -66,8 +66,8 @@ class PexpectClient:
 
     def login_with_password(self):
         if self.password is None or self.password.strip() == '':
-            sys.stdout.write('\n')
-            password = getpass.getpass(greenStr('Input Your Password:'))
+            # sys.stdout.write('\n')
+            password = getpass.getpass(UseStyle('Input Your Password:', mode = 'bold',fore='green'))
             self.child.sendline(password)
         else:
             self.child.sendline(self.password)
