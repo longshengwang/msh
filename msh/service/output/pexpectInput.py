@@ -6,6 +6,9 @@ import sys
 from msh.constants.Constants import SSHSchedule
 from msh.constants.PasswordErrorException import PasswordErrorException
 import signal
+import getpass
+from msh.service.color import greenStr
+
 
 import struct, fcntl, termios
 PASSWORD = "password"
@@ -62,9 +65,12 @@ class PexpectClient:
         self.login_with_password()
 
     def login_with_password(self):
-        if self.password is None:
-            return
-        self.child.sendline(self.password)
+        if self.password is None or self.password.strip() == '':
+            sys.stdout.write('\n')
+            password = getpass.getpass(greenStr('Input Your Password:'))
+            self.child.sendline(password)
+        else:
+            self.child.sendline(self.password)
         self.child.expect("Permission denied|Password:|password:|[#\$]|\s")
         if self.child.after == "Permission denied" or self.child.after == "Password:" or self.child.after == "password:" :
             raise PasswordErrorException
