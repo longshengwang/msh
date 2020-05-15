@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
       name="msh",
-      version="1.1",
+      version="1.2",
       keywords='mac ssh',
       description="mac ssh client(linux can also use)",
       author="wls",
