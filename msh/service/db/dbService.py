@@ -1,4 +1,4 @@
-# -*- coding:utf8 -*-
+# -*- coding:utf-8 -*-
 import sqlite3
 
 '''
@@ -65,6 +65,7 @@ class DBService:
         self.conn.commit()
 
     def get_all_ssh_list(self, order_by='id'):
+        # self.conn.text_factory = str
         cursor = self.conn.execute(
             "SELECT id,name,passwd,host,port, alias, timestamp from SSHList order by %s desc limit 100" % order_by)
         ssh_list = []
@@ -112,19 +113,20 @@ class DBService:
 
 
 if __name__ == "__main__":
-    # db = DBService()
+    db = DBService()
     # db._del_db('Security')
     # db.put_security_key('woshi')
     # print db.get_security_key()
     # import time
     # db.put_ssh_key('root','123456','192.168.205.22',time.time())
-    # print db.get_all_ssh_list()
+    for i in db.get_all_ssh_list():
+        print i
     # print db.get_security_key()
 
-    conn = sqlite3.connect('database/ssh.db')
-    cur = conn.execute('SELECT id,name,passwd,host,timestamp FROM SSHList WHERE host = \'20.0.0.130\'')
-    for xx in cur:
-        print xx
+    # conn = sqlite3.connect('/Users/wls/.msh/ssh.db')
+    # cur = conn.execute('SELECT id,name,passwd,host,timestamp FROM SSHList WHERE host = \'20.0.0.130\'')
+    # for xx in cur:
+    #     print xx
     '''
     conn = sqlite3.connect('cmd.db')
 

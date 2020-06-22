@@ -1,5 +1,8 @@
 # -*- coding:utf8 -*-
 import sys, os
+
+from msh.service.db.dbService import DBService
+
 from msh.service.color import UseStyle, redStr, greenStr
 
 SPACE = ' '
@@ -53,13 +56,13 @@ class OutputClient:
 
     def print_header(self):
         segment = ''
-        value = VERTICAL_LINE
+        value = ' '
         for i in range(len(self.headers)):
             segment += (SPACE * 1 + self.header_width[i] * HORIZON_LINE)
             value += (SPACE * EMPTY
                       + UseStyle(self.headers[i], fore='red')
                       + (self.header_width[i] - len(self.headers[i]) - EMPTY) * SPACE
-                      + VERTICAL_LINE)
+                      + (VERTICAL_LINE if i != len(self.headers) - 1 else ' '))
 
         return segment + NEWLINE + value + NEWLINE + segment + NEWLINE
 
@@ -75,15 +78,20 @@ class OutputClient:
         return values_str
 
     def print_value(self, value):
-        value_str = VERTICAL_LINE
+        value_str = ' '
         segmemt = ''
         for i in range(len(value)):
             val = UseStyle(value[i], fore='green') if i > 0 else UseStyle(value[i], mode='bold', fore='red')
             # val = value[i]
+            toC = None
+            if type(value[i]) == unicode:
+                toC = value[i]
+            else:
+                toC = str(value[i])
             value_str += (SPACE * EMPTY
                           + val
-                          + (self.header_width[i] - len(str(value[i])) - EMPTY) * SPACE
-                          + VERTICAL_LINE)
+                          + (self.header_width[i] - len(toC) - EMPTY) * SPACE
+                          + (VERTICAL_LINE if i != len(value) - 1 else ' '))
             segmemt += (SPACE * 1 + self.header_width[i] * HORIZON_LINE)
         value_str += NEWLINE
         segmemt += NEWLINE
@@ -136,3 +144,20 @@ class OutputClient:
             #
             # print -10 * '-' + '=='
             # print int('a')
+
+
+# if __name__ == "__main__":
+#     # a = '12345'
+#     # print a[0:-1]
+#     o = OutputClient()
+#     db = DBService()
+#     l = db.get_all_ssh_list()
+#
+#     x = [l[0]]
+#     o.set_header(['Index', 'UserName', 'Host', 'Port', 'Alias'], [7, 17, 15, 10, 30])
+#     o.set_values(x)
+#     print o.show()
+
+    # a = u'啊阿斯达'
+    # print a[1]
+    # print 'aa'

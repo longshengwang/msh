@@ -1,15 +1,14 @@
 # -*- coding:utf8 -*-
 import getpass
-from service.output.pexpectInput import PexpectClient
-from constants.PasswordErrorException import PasswordErrorException
-import os
-from optparse import OptionParser
-from constants.ParamsException import ParamsException
 import sys
+from optparse import OptionParser
+
 from pexpect.exceptions import TIMEOUT
+
 from api.api import Api
 from api.inputClient import InputClient
 from api.outputClient import OutputClient
+from constants.ParamsException import ParamsException
 from service.color import redStr, greenStr
 
 
@@ -33,7 +32,7 @@ def main():
     opt_values = opt_dict.values()
     param_len = len(opt_values) - opt_values.count(None)
     output = OutputClient()
-    output.set_header(['Index','UserName', 'Host', 'Port', 'Alias'], [7, 17, 15, 10, 30])
+    output.set_header(['Index','UserName', 'Host', 'Port', 'Alias'], [7, 17, 17, 10, 30])
     if param_len > 1:
         raise ParamsException('Param Error')
     elif param_len == 0:
